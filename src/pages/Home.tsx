@@ -144,7 +144,7 @@ export default function Home() {
         </PageShell>
       </div>
 
-      <div className="py-12 lg:py-16">
+      <div className="py-8 lg:py-10">
         <PageShell>
           <WhyChooseOhana />
         </PageShell>

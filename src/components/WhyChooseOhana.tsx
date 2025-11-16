@@ -130,7 +130,7 @@ export default function WhyChooseOhana() {
       <div>
         <div className="mx-auto" style={{ maxWidth: '1350px' }}>
         <div
-          className="text-center mx-auto mb-20 transition-all duration-700"
+          className="text-center mx-auto mb-12 transition-all duration-700"
           style={{
             maxWidth: '900px',
             opacity: isVisible ? 1 : 0,
@@ -145,15 +145,15 @@ export default function WhyChooseOhana() {
           </p>
         </div>
 
-        <div className="space-y-8 lg:space-y-10">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+        <div className="space-y-5 lg:space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6">
             <div
               ref={(el) => (cardRefs.current[0] = el)}
               className="lg:col-span-2 relative group cursor-pointer"
               style={{
                 background: cards[0].gradient,
                 borderRadius: '30px',
-                padding: '48px',
+                padding: '24px 40px',
                 boxShadow: '0px 28px 60px rgba(0,0,0,0.08)',
                 opacity: visibleCards[0] ? 1 : 0,
                 transform: visibleCards[0] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
@@ -176,7 +176,7 @@ export default function WhyChooseOhana() {
                 })()}
               </div>
               <div style={{ paddingTop: '80px' }}>
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-5" style={{ color: '#0A2540' }}>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ color: '#0A2540' }}>
                   {cards[0].title}
                 </h3>
                 <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#435368' }}>
@@ -191,9 +191,8 @@ export default function WhyChooseOhana() {
               style={{
                 background: cards[1].gradient,
                 borderRadius: '30px',
-                padding: '48px',
+                padding: '24px 40px',
                 boxShadow: '0px 28px 60px rgba(0,0,0,0.08)',
-                minHeight: '400px',
                 opacity: visibleCards[1] ? 1 : 0,
                 transform: visibleCards[1] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
                 transition: 'all 0.65s cubic-bezier(0.22, 1, 0.36, 1)'
@@ -215,7 +214,7 @@ export default function WhyChooseOhana() {
                 })()}
               </div>
               <div style={{ paddingTop: '80px' }}>
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-5" style={{ color: '#0A2540' }}>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ color: '#0A2540' }}>
                   {cards[1].title}
                 </h3>
                 <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#435368' }}>
@@ -225,14 +224,14 @@ export default function WhyChooseOhana() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6">
             <div
               ref={(el) => (cardRefs.current[2] = el)}
               className="lg:col-span-1 relative group cursor-pointer"
               style={{
                 background: cards[2].gradient,
                 borderRadius: '30px',
-                padding: '48px',
+                padding: '24px 40px',
                 boxShadow: '0px 28px 60px rgba(0,0,0,0.08)',
                 opacity: visibleCards[2] ? 1 : 0,
                 transform: visibleCards[2] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
@@ -255,7 +254,7 @@ export default function WhyChooseOhana() {
                 })()}
               </div>
               <div style={{ paddingTop: '80px' }}>
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-5" style={{ color: '#0A2540' }}>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ color: '#0A2540' }}>
                   {cards[2].title}
                 </h3>
                 <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#435368' }}>
@@ -270,7 +269,7 @@ export default function WhyChooseOhana() {
               style={{
                 background: cards[3].gradient,
                 borderRadius: '30px',
-                padding: '48px',
+                padding: '24px 40px',
                 boxShadow: '0px 28px 60px rgba(0,0,0,0.08)',
                 opacity: visibleCards[3] ? 1 : 0,
                 transform: visibleCards[3] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
@@ -293,7 +292,7 @@ export default function WhyChooseOhana() {
                 })()}
               </div>
               <div style={{ paddingTop: '80px' }}>
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-5" style={{ color: '#0A2540' }}>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ color: '#0A2540' }}>
                   {cards[3].title}
                 </h3>
                 <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#435368' }}>
@@ -310,7 +309,7 @@ export default function WhyChooseOhana() {
               style={{
                 background: cards[4].gradient,
                 borderRadius: '30px',
-                padding: '48px 48px 64px 48px',
+                padding: '24px 40px 32px 40px',
                 boxShadow: '0px 28px 60px rgba(0,0,0,0.08)',
                 opacity: visibleCards[4] ? 1 : 0,
                 transform: visibleCards[4] ? 'translateY(0) scale(1)' : 'translateY(40px) scale(0.96)',
@@ -333,7 +332,7 @@ export default function WhyChooseOhana() {
                 })()}
               </div>
               <div style={{ paddingTop: '80px' }} className="text-center max-w-3xl mx-auto">
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-5" style={{ color: '#0A2540' }}>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-3" style={{ color: '#0A2540' }}>
                   {cards[4].title}
                 </h3>
                 <p className="text-base sm:text-lg leading-relaxed" style={{ color: '#435368' }}>
