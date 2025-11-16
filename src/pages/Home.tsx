@@ -59,80 +59,78 @@ export default function Home() {
     <>
       <WelcomeModal />
 
-      <div className="pt-32 pb-16">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-20">
-          <div className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden rounded-3xl">
-            {videos.length > 0 ? (
-              <>
+      <div className="pt-32 pb-16 px-6 md:px-10 lg:px-16">
+        <div className="w-full relative min-h-[600px] lg:min-h-[700px] overflow-hidden rounded-3xl">
+          {videos.length > 0 ? (
+            <>
+              <video
+                ref={currentVideoRef}
+                autoPlay
+                muted
+                playsInline
+                onEnded={handleVideoEnd}
+                className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+                style={{ opacity: isTransitioning ? 0 : 1 }}
+                key={`current-${currentVideoIndex}`}
+              >
+                <source src={videos[currentVideoIndex]} type="video/mp4" />
+              </video>
+
+              {videos.length > 1 && (
                 <video
-                  ref={currentVideoRef}
-                  autoPlay
+                  ref={nextVideoRef}
                   muted
                   playsInline
-                  onEnded={handleVideoEnd}
-                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 rounded-3xl"
-                  style={{ opacity: isTransitioning ? 0 : 1 }}
-                  key={`current-${currentVideoIndex}`}
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+                  style={{ opacity: isTransitioning ? 1 : 0 }}
+                  key={`next-${nextVideoIndex}`}
                 >
-                  <source src={videos[currentVideoIndex]} type="video/mp4" />
+                  <source src={videos[nextVideoIndex]} type="video/mp4" />
                 </video>
-
-                {videos.length > 1 && (
-                  <video
-                    ref={nextVideoRef}
-                    muted
-                    playsInline
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 rounded-3xl"
-                    style={{ opacity: isTransitioning ? 1 : 0 }}
-                    key={`next-${nextVideoIndex}`}
-                  >
-                    <source src={videos[nextVideoIndex]} type="video/mp4" />
-                  </video>
-                )}
-              </>
-            ) : (
-              <div
-                className="absolute inset-0 w-full h-full rounded-3xl"
-                style={{ background: '#042959' }}
-              />
-            )}
-
+              )}
+            </>
+          ) : (
             <div
-              className="absolute inset-0 rounded-3xl"
-              style={{ background: 'linear-gradient(to bottom, rgba(4, 41, 89, 0.5), rgba(4, 41, 89, 0.7))' }}
+              className="absolute inset-0 w-full h-full"
+              style={{ background: '#042959' }}
             />
+          )}
 
-            <div className="relative z-10 w-full px-8 sm:px-12 lg:px-16 py-16 lg:py-20">
-              <div className="max-w-2xl">
-                <div className="mb-6">
-                  <span className="inline-block text-sm uppercase tracking-wider font-medium text-blue-200 mb-2">
-                    Premium Laundry Services
-                  </span>
-                </div>
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(to bottom, rgba(4, 41, 89, 0.5), rgba(4, 41, 89, 0.7))' }}
+          />
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                  Professional Care for Everyday Life.
-                </h1>
+          <div className="relative z-10 max-w-[1190px] mx-auto px-8 sm:px-12 lg:px-16 py-16 lg:py-20">
+            <div className="max-w-2xl">
+              <div className="mb-6">
+                <span className="inline-block text-sm uppercase tracking-wider font-medium text-blue-200 mb-2">
+                  Premium Laundry Services
+                </span>
+              </div>
 
-                <p className="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-xl" style={{ lineHeight: '1.6' }}>
-                  Suits, dresses, silk, and traditional wear cleaned with expert stain care and finishing.
-                </p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Professional Care for Everyday Life.
+              </h1>
 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a
-                    href="#book-now"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-ohana-mid-blue text-white text-lg font-medium rounded-lg hover:scale-102 hover:shadow-xl transition-all duration-200"
-                  >
-                    Book Now
-                  </a>
+              <p className="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-xl" style={{ lineHeight: '1.6' }}>
+                Suits, dresses, silk, and traditional wear cleaned with expert stain care and finishing.
+              </p>
 
-                  <Link
-                    to="/pricing"
-                    className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white text-lg font-medium rounded-lg border-2 border-white hover:bg-white/10 transition-all duration-200"
-                  >
-                    See Prices
-                  </Link>
-                </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a
+                  href="#book-now"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-ohana-mid-blue text-white text-lg font-medium rounded-lg hover:scale-102 hover:shadow-xl transition-all duration-200"
+                >
+                  Book Now
+                </a>
+
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-transparent text-white text-lg font-medium rounded-lg border-2 border-white hover:bg-white/10 transition-all duration-200"
+                >
+                  See Prices
+                </Link>
               </div>
             </div>
           </div>
