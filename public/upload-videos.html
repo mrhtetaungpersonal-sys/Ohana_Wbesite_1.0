@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Hero Videos - Ohana</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #042959 0%, #0a4080 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    h1 {
+      color: #042959;
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 32px;
+      font-size: 15px;
+    }
+    .upload-area {
+      border: 2px dashed #042959;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover {
+      background: #f8fafc;
+      border-color: #0a4080;
+    }
+    .upload-area.dragover {
+      background: #e0f2fe;
+      border-color: #0284c7;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+    .upload-text {
+      color: #042959;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .upload-subtext {
+      color: #666;
+      font-size: 14px;
+    }
+    .file-list {
+      margin-bottom: 24px;
+    }
+    .file-item {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .file-name {
+      color: #042959;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .file-size {
+      color: #666;
+      font-size: 13px;
+    }
+    .remove-btn {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .remove-btn:hover {
+      background: #dc2626;
+    }
+    .upload-btn {
+      background: #042959;
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.3s ease;
+    }
+    .upload-btn:hover:not(:disabled) {
+      background: #0a4080;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(4, 41, 89, 0.3);
+    }
+    .upload-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 16px;
+      display: none;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #042959 0%, #0a4080 100%);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+    .message {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      display: none;
+    }
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+      border: 1px solid #86efac;
+    }
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+    .info-box {
+      background: #e0f2fe;
+      border: 1px solid #7dd3fc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #0c4a6e;
+    }
+    .info-box strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #042959;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 Upload Hero Videos</h1>
+    <p class="subtitle">Upload 3 videos for your Hero Banner rotation</p>
+
+    <div class="info-box">
+      <strong>📝 Instructions:</strong>
+      Select or drag-and-drop your 3 hero banner videos. Supported formats: MP4, WebM, MOV, AVI. Max size: 100MB per file.
+    </div>
+
+    <div class="upload-area" id="uploadArea">
+      <div class="upload-icon">📹</div>
+      <div class="upload-text">Click to select videos or drag and drop here</div>
+      <div class="upload-subtext">Select up to 3 video files</div>
+      <input type="file" id="fileInput" accept="video/mp4,video/webm,video/quicktime,video/x-msvideo" multiple>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+
+    <button class="upload-btn" id="uploadBtn" disabled>Upload Videos</button>
+
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="message" id="message"></div>
+  </div>
+
+  <script type="module">
+    const SUPABASE_URL = 'https://ymiipoghavzxiemvmuyq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InltaWlwb2doYXZ6eGllbXZtdXlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMDM2NTgsImV4cCI6MjA3ODY3OTY1OH0.lO_7UL_YKfpAgjuI9jJtGOjetZeYCm3xWuofSTRkbW8';
+
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const message = document.getElementById('message');
+
+    let selectedFiles = [];
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+
+    function handleFiles(files) {
+      const videoFiles = Array.from(files).filter(file => file.type.startsWith('video/'));
+
+      if (videoFiles.length === 0) {
+        showMessage('Please select video files only', 'error');
+        return;
+      }
+
+      if (selectedFiles.length + videoFiles.length > 3) {
+        showMessage('You can only upload up to 3 videos', 'error');
+        return;
+      }
+
+      videoFiles.forEach(file => {
+        if (file.size > 104857600) {
+          showMessage(`${file.name} is too large. Max size: 100MB`, 'error');
+          return;
+        }
+        selectedFiles.push(file);
+      });
+
+      renderFileList();
+      uploadBtn.disabled = selectedFiles.length === 0;
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = '';
+      selectedFiles.forEach((file, index) => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'file-item';
+        fileItem.innerHTML = `
+          <div class="file-info">
+            <div>
+              <div class="file-name">${file.name}</div>
+              <div class="file-size">${formatFileSize(file.size)}</div>
+            </div>
+          </div>
+          <button class="remove-btn" onclick="removeFile(${index})">Remove</button>
+        `;
+        fileList.appendChild(fileItem);
+      });
+    }
+
+    window.removeFile = function(index) {
+      selectedFiles.splice(index, 1);
+      renderFileList();
+      uploadBtn.disabled = selectedFiles.length === 0;
+    };
+
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = `message ${type}`;
+      message.style.display = 'block';
+
+      if (type === 'success') {
+        setTimeout(() => {
+          message.style.display = 'none';
+        }, 5000);
+      }
+    }
+
+    uploadBtn.addEventListener('click', async () => {
+      if (selectedFiles.length === 0) return;
+
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = 'Uploading...';
+      progressBar.style.display = 'block';
+      message.style.display = 'none';
+
+      let uploadedCount = 0;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const file = selectedFiles[i];
+        const fileName = `hero-${i + 1}-${Date.now()}.${file.name.split('.').pop()}`;
+
+        try {
+          const { data, error } = await supabaseClient.storage
+            .from('videos')
+            .upload(fileName, file, {
+              cacheControl: '3600',
+              upsert: false
+            });
+
+          if (error) throw error;
+
+          uploadedCount++;
+          const progress = (uploadedCount / selectedFiles.length) * 100;
+          progressFill.style.width = progress + '%';
+
+        } catch (error) {
+          console.error('Upload error:', error);
+          showMessage(`Error uploading ${file.name}: ${error.message}`, 'error');
+          uploadBtn.disabled = false;
+          uploadBtn.textContent = 'Upload Videos';
+          return;
+        }
+      }
+
+      showMessage(`Successfully uploaded ${uploadedCount} video(s)! ✅`, 'success');
+      uploadBtn.textContent = 'Upload Complete!';
+
+      selectedFiles = [];
+      renderFileList();
+
+      setTimeout(() => {
+        progressBar.style.display = 'none';
+        progressFill.style.width = '0%';
+        uploadBtn.textContent = 'Upload Videos';
+        uploadBtn.disabled = true;
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
