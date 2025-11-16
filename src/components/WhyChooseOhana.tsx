@@ -125,10 +125,15 @@ export default function WhyChooseOhana() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-white"
-      style={{ paddingTop: '140px', paddingBottom: '140px' }}
+      className="relative"
     >
-      <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: '1350px' }}>
+      <div
+        className="bg-gradient-to-br from-blue-50 to-white px-6 py-16 sm:px-10 sm:py-20 lg:px-16 lg:py-24 rounded-3xl lg:rounded-[32px]"
+        style={{
+          boxShadow: '0px 28px 60px rgba(0, 0, 0, 0.08)'
+        }}
+      >
+        <div className="mx-auto" style={{ maxWidth: '1350px' }}>
         <div
           className="text-center mx-auto mb-20 transition-all duration-700"
           style={{
@@ -342,6 +347,7 @@ export default function WhyChooseOhana() {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

@@ -58,7 +58,7 @@ export default function Home() {
     <>
       <WelcomeModal />
 
-      <div className="relative min-h-screen flex items-center overflow-hidden">
+      <div className="relative min-h-screen flex items-center overflow-hidden pt-20">
         {videos.length > 0 ? (
           <>
             <video
@@ -136,9 +136,21 @@ export default function Home() {
         </div>
       </div>
 
-      <KeyServicesPreview />
+      <div className="relative -mt-12 sm:-mt-16 lg:-mt-20">
+        <div
+          className="mx-4 sm:mx-6 lg:mx-12 xl:mx-auto"
+          style={{ maxWidth: '1440px' }}
+        >
+          <KeyServicesPreview />
+        </div>
+      </div>
 
-      <WhyChooseOhana />
+      <div
+        className="mx-4 sm:mx-6 lg:mx-12 xl:mx-auto mt-12 lg:mt-16"
+        style={{ maxWidth: '1440px' }}
+      >
+        <WhyChooseOhana />
+      </div>
     </>
   );
 }

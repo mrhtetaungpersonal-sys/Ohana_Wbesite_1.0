@@ -3,8 +3,8 @@ import { MessageCircle, Phone, Mail, Facebook } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200" style={{ backgroundColor: '#F2F2F2' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="border-t border-gray-200 mt-16 lg:mt-24" style={{ backgroundColor: '#F2F2F2' }}>
+      <div className="mx-4 sm:mx-6 lg:mx-12 xl:mx-auto py-12" style={{ maxWidth: '1440px' }}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Essential</h3>
