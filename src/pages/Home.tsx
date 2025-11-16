@@ -101,23 +101,24 @@ export default function Home() {
             style={{ background: 'linear-gradient(to bottom, rgba(4, 41, 89, 0.5), rgba(4, 41, 89, 0.7))' }}
           />
 
-          <div className="relative z-10 max-w-[1190px] mx-auto px-8 sm:px-12 lg:px-16 py-16 lg:py-20">
-            <div className="max-w-2xl">
-              <div className="mb-6">
-                <span className="inline-block text-sm uppercase tracking-wider font-medium text-blue-200 mb-2">
-                  Premium Laundry Services
-                </span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <div className="absolute inset-x-8 sm:inset-x-12 lg:inset-x-16 bottom-12 lg:bottom-16 z-10 flex flex-col lg:flex-row justify-between items-end gap-8 lg:gap-12">
+            {/* Left column: Label + Headline */}
+            <div className="flex flex-col gap-4 max-w-xl">
+              <span className="inline-block text-sm uppercase tracking-wider font-medium text-blue-200">
+                Premium Laundry Services
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
                 Professional Care for Everyday Life.
               </h1>
+            </div>
 
-              <p className="text-lg sm:text-xl text-gray-200 mb-10 leading-relaxed max-w-xl" style={{ lineHeight: '1.6' }}>
+            {/* Right column: Paragraph + CTAs */}
+            <div className="flex flex-col gap-6 max-w-md lg:text-right">
+              <p className="text-lg sm:text-xl text-gray-200 leading-relaxed" style={{ lineHeight: '1.6' }}>
                 Suits, dresses, silk, and traditional wear cleaned with expert stain care and finishing.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 lg:justify-end">
                 <a
                   href="#book-now"
                   className="inline-flex items-center justify-center px-8 py-4 bg-ohana-mid-blue text-white text-lg font-medium rounded-lg hover:scale-102 hover:shadow-xl transition-all duration-200"

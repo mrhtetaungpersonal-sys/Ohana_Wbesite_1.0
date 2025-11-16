@@ -3,7 +3,7 @@ import { MessageCircle, Phone, Mail, Facebook } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="py-12 lg:py-16">
+    <footer className="preserve-font-size py-12 lg:py-16">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
         <div
           className="bg-white/95 rounded-3xl shadow-lg px-8 py-12"

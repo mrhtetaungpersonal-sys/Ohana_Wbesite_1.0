@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    font-size: 75%;
+  }
+
+  .preserve-font-size {
+    font-size: 133.33%;
+  }
+}
+
 @layer utilities {
   .hover\:scale-102:hover {
     transform: scale(1.02);
