@@ -223,12 +223,7 @@ export default function KeyServicesPreview() {
       ref={sectionRef}
       className="relative"
     >
-      <div
-        className="bg-white shadow-lg px-6 py-12 sm:px-10 sm:py-16 lg:px-16 lg:py-20 rounded-3xl lg:rounded-[32px]"
-        style={{
-          boxShadow: '0px 28px 60px rgba(0, 0, 0, 0.08)'
-        }}
-      >
+      <div>
         <div className="text-center pb-12 max-w-4xl mx-auto">
           <span className="inline-block text-4xl uppercase tracking-wider font-medium text-ohana-mid-blue mb-4">
             OUR SERVICES
@@ -364,18 +359,18 @@ export default function KeyServicesPreview() {
             ))}
           </div>
         </div>
+      </div>
 
-        <div
-          className={`fixed bottom-8 left-8 z-50 transition-all duration-500 ${
-            isExitingSection ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'
-          }`}
-        >
+      <div
+        className={`fixed bottom-8 left-8 z-50 transition-all duration-500 ${
+          isExitingSection ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'
+        }`}
+      >
         <div className="bg-gradient-to-r from-ohana-mid-blue to-ohana-soft-blue text-white px-6 py-3 rounded-full shadow-2xl hover:shadow-3xl hover:scale-105 transition-all duration-300 cursor-pointer group animate-bounce-slow">
           <div className="flex items-center space-x-2">
             <Sparkles className="w-5 h-5 animate-pulse" />
             <span className="font-bold text-sm">Get 50% Off First Order</span>
           </div>
-        </div>
         </div>
       </div>
 

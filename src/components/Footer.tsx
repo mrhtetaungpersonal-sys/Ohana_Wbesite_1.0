@@ -3,8 +3,14 @@ import { MessageCircle, Phone, Mail, Facebook } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 mt-16 lg:mt-24" style={{ backgroundColor: '#F2F2F2' }}>
-      <div className="mx-4 sm:mx-6 lg:mx-12 xl:mx-auto py-12" style={{ maxWidth: '1440px' }}>
+    <footer className="py-12 lg:py-16">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+        <div
+          className="bg-white/95 rounded-3xl shadow-lg px-8 py-12"
+          style={{
+            boxShadow: '0 12px 48px rgba(0, 0, 0, 0.12)'
+          }}
+        >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Essential</h3>
@@ -101,6 +107,7 @@ export default function Footer() {
           <p className="text-center text-sm text-gray-600">
             &copy; {new Date().getFullYear()} Ohana Professional Laundry. All rights reserved.
           </p>
+        </div>
         </div>
       </div>
     </footer>

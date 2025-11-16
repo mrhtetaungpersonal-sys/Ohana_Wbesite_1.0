@@ -20,21 +20,22 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-        isHomepage ? 'pt-6 px-4 sm:px-6 lg:px-12' : 'pt-4 px-4 sm:px-6 lg:px-12'
+        isHomepage ? 'pt-6' : 'pt-4'
       }`}
     >
-      <nav
-        className={`mx-auto bg-white/95 backdrop-blur-md shadow-lg transition-all duration-500 ease-out ${
-          isScrolled
-            ? 'max-w-[1200px] rounded-[28px] py-3'
-            : 'max-w-[1280px] rounded-[32px] py-4'
-        }`}
-        style={{
-          boxShadow: isScrolled
-            ? '0 10px 40px rgba(0, 0, 0, 0.12)'
-            : '0 12px 48px rgba(0, 0, 0, 0.15)'
-        }}
-      >
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 lg:px-16">
+        <nav
+          className={`bg-white/80 backdrop-blur-md shadow-lg transition-all duration-500 ease-out ${
+            isScrolled
+              ? 'rounded-[28px] py-3'
+              : 'rounded-[32px] py-4'
+          }`}
+          style={{
+            boxShadow: isScrolled
+              ? '0 10px 40px rgba(0, 0, 0, 0.12)'
+              : '0 12px 48px rgba(0, 0, 0, 0.15)'
+          }}
+        >
         <div className="px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <Link to="/" className="flex items-center">
@@ -154,7 +155,8 @@ export default function Header() {
             </div>
           )}
         </div>
-      </nav>
+        </nav>
+      </div>
     </header>
   );
 }
