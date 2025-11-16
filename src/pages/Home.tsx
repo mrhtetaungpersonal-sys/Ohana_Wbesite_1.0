@@ -60,7 +60,7 @@ export default function Home() {
       <WelcomeModal />
 
       <div className="pt-32 pb-16">
-        <div className="max-w-[1600px] mx-auto px-6 md:px-8 lg:px-12">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-20">
           <div className="relative min-h-[600px] lg:min-h-[700px] flex items-center overflow-hidden rounded-3xl">
             {videos.length > 0 ? (
               <>
