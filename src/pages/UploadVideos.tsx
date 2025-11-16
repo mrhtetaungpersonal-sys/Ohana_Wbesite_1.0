@@ -1,18 +1,22 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Upload, X, CheckCircle, AlertCircle } from 'lucide-react';
+import { Upload, X, CheckCircle, AlertCircle, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useAuth } from '../contexts/AuthContext';
+import Login from '../components/Login';
 
 interface FileWithPreview extends File {
   id: string;
 }
 
 export default function UploadVideos() {
+  const { user, loading: authLoading, signOut } = useAuth();
   const [selectedFiles, setSelectedFiles] = useState<FileWithPreview[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [storageReady, setStorageReady] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const checkStorage = async () => {
@@ -152,18 +156,63 @@ export default function UploadVideos() {
     }, 3000);
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#042959] to-[#0a4080] flex items-center justify-center">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        {showLogin && <Login onClose={() => setShowLogin(false)} />}
+        <div className="min-h-screen bg-gradient-to-br from-[#042959] to-[#0a4080] flex items-center justify-center px-4">
+          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 max-w-md w-full text-center">
+            <div className="mb-6">
+              <Upload className="w-16 h-16 mx-auto text-[#042959] mb-4" />
+              <h1 className="text-3xl font-bold text-[#042959] mb-3">
+                Authentication Required
+              </h1>
+              <p className="text-gray-600">
+                You must be signed in to upload videos to the Hero Section.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowLogin(true)}
+              className="w-full bg-[#042959] hover:bg-[#0a4080] text-white font-medium py-3 px-6 rounded-lg transition-all duration-200"
+            >
+              Sign In to Upload
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#042959] to-[#0a4080] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#042959] mb-3 flex items-center gap-3">
-              <Upload className="w-8 h-8" />
-              Upload Hero Videos
-            </h1>
-            <p className="text-gray-600 text-base">
-              Upload 3 videos for your Hero Banner rotation
-            </p>
+          <div className="mb-8 flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold text-[#042959] mb-3 flex items-center gap-3">
+                <Upload className="w-8 h-8" />
+                Upload Hero Videos
+              </h1>
+              <p className="text-gray-600 text-base">
+                Upload 3 videos for your Hero Banner rotation
+              </p>
+            </div>
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-[#042959] hover:bg-gray-100 rounded-lg transition-all duration-200"
+              title="Sign Out"
+            >
+              <LogOut className="w-5 h-5" />
+              <span className="hidden sm:inline">Sign Out</span>
+            </button>
           </div>
 
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
