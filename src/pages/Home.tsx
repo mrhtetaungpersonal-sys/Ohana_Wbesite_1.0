@@ -41,8 +41,9 @@ export default function Home() {
             .from('videos')
             .getPublicUrl(file.name);
           return urlData.publicUrl;
+                                                        });
         });
-        setVideos(videoUrls);
+       setVideos(videoUrls);
                 console.log('DEBUG: Final video URLs set:', videoUrls);
       }
     } catch (error) {
