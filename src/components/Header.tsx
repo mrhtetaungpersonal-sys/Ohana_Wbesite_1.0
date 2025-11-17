@@ -20,6 +20,7 @@ export default function Header() {
   return (
     <header
       className={`preserve-font-size fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        console.log('DEBUG: loadVideos function started!');
         isHomepage ? 'pt-6' : 'pt-4'
       }`}
     >
