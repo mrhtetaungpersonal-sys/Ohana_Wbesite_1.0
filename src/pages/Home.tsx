@@ -20,6 +20,7 @@ export default function Home() {
 
   const loadVideos = async () => {
     try {
+      console.log('DEBUG: loadVideos function started!');
       const { data, error } = await supabase.storage.from('videos').list();
           console.log('DEBUG: Videos from storage:', data);
 
