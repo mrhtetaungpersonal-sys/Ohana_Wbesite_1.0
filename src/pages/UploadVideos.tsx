@@ -15,27 +15,67 @@ export default function UploadVideos() {
   const [storageReady, setStorageReady] = useState(true);
 
   useEffect(() => {
-    const checkStorage = async () => {
+    const checkStorage = async (retryCount = 0) => {
+      const maxRetries = 3;
+      const retryDelay = 1000;
+
       try {
+        console.log('Checking Supabase storage connection...');
         const { data, error } = await supabase.storage.listBuckets();
-        
+
         if (error) {
-          console.error('Storage check error:', error);
+          console.error('Storage check error:', {
+            message: error.message,
+            status: error.statusCode,
+            details: error,
+          });
+
+          if (retryCount < maxRetries) {
+            console.log(`Retrying storage connection (${retryCount + 1}/${maxRetries})...`);
+            setTimeout(() => checkStorage(retryCount + 1), retryDelay);
+            return;
+          }
+
           setStorageReady(false);
           setMessage({
-            text: 'Unable to connect to storage. Please check your connection and refresh the page.',
+            text: `Unable to connect to storage: ${error.message}. Please check your connection and refresh the page.`,
+            type: 'error'
+          });
+        } else if (!data) {
+          console.error('No data returned from storage.listBuckets()');
+          setStorageReady(false);
+          setMessage({
+            text: 'No storage data received. Please refresh the page.',
             type: 'error'
           });
         } else if (!data.some(bucket => bucket.name === 'videos')) {
+          console.error('Available buckets:', data.map(b => b.name));
           setStorageReady(false);
           setMessage({
             text: 'Videos storage bucket not found. Please contact support.',
             type: 'error'
           });
+        } else {
+          console.log('Storage connection successful. Videos bucket found.');
         }
       } catch (err) {
-        console.error('Storage initialization error:', err);
+        console.error('Storage initialization error:', {
+          error: err,
+          message: err instanceof Error ? err.message : 'Unknown error',
+          stack: err instanceof Error ? err.stack : undefined,
+        });
+
+        if (retryCount < maxRetries) {
+          console.log(`Retrying after error (${retryCount + 1}/${maxRetries})...`);
+          setTimeout(() => checkStorage(retryCount + 1), retryDelay);
+          return;
+        }
+
         setStorageReady(false);
+        setMessage({
+          text: `Storage error: ${err instanceof Error ? err.message : 'Unknown error'}`,
+          type: 'error'
+        });
       }
     };
 
