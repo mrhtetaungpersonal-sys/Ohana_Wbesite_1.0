@@ -30,19 +30,19 @@ export default function Home() {
       }
 
       if (data && data.length > 0) {
-        const videoUrls = data.map((file) => {
-      // Filter out system files and get only video files
-      const videoFiles = data.filter(file => 
-        !file.name.includes('.emptyFolderPlaceholder') && 
-        (file.name.endsWith('.mp4') || file.name.endsWith('.webm') || file.name.endsWith('.mov'))
-      );
-      console.log('DEBUG: Filtered video files:', videoFiles.map(f => f.name));
-      
-      const videoUrls = videoFiles.map((file) => {          const { data: urlData } = supabase.storage
-            .from('videos')
-            .getPublicUrl(file.name);
-          return urlData.publicUrl;
-                                                        });
+       // Filter out system files and only get video files  
+const videoFiles = data.filter(file =>
+  !file.name.includes('.emptyFolderPlaceholder') &&
+  (file.name.endsWith('.mp4') || file.name.endsWith('.webm') || file.name.endsWith('.mov'))
+);
+
+console.log('DEBUG: Filtered video files:', videoFiles.map(f => f.name));
+
+// Create direct public URLs (no authentication needed for public buckets)
+const videoUrls = videoFiles.map((file) => {
+  return `https://cgfcmsmwfwmkjfasvznl.supabase.co/storage/v1/object/public/videos/${file.name}`;
+});
+                                     });
         });
        setVideos(videoUrls);
                 console.log('DEBUG: Final video URLs set:', videoUrls);
