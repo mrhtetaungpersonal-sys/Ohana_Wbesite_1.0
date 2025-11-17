@@ -21,6 +21,7 @@ export default function Home() {
   const loadVideos = async () => {
     try {
       const { data, error } = await supabase.storage.from('videos').list();
+          console.log('DEBUG: Videos from storage:', data);
 
       if (error) {
         console.error('Error loading videos:', error);
@@ -29,12 +30,20 @@ export default function Home() {
 
       if (data && data.length > 0) {
         const videoUrls = data.map((file) => {
-          const { data: urlData } = supabase.storage
+      // Filter out system files and get only video files
+      const videoFiles = data.filter(file => 
+        !file.name.includes('.emptyFolderPlaceholder') && 
+        (file.name.endsWith('.mp4') || file.name.endsWith('.webm') || file.name.endsWith('.mov'))
+      );
+      console.log('DEBUG: Filtered video files:', videoFiles.map(f => f.name));
+      
+      const videoUrls = videoFiles.map((file) => {          const { data: urlData } = supabase.storage
             .from('videos')
             .getPublicUrl(file.name);
           return urlData.publicUrl;
         });
         setVideos(videoUrls);
+                console.log('DEBUG: Final video URLs set:', videoUrls);
       }
     } catch (error) {
       console.error('Error fetching videos:', error);
