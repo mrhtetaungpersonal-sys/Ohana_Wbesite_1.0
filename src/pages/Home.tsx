@@ -22,7 +22,7 @@ export default function Home() {
     try {
       console.log('DEBUG: loadVideos function started!');
       const { data, error } = await supabase.storage.from('videos').list();
-          console.log('DEBUG: Videos from storage:', data);
+      console.log('DEBUG: Videos from storage:', data);
 
       if (error) {
         console.error('Error loading videos:', error);
@@ -30,17 +30,24 @@ export default function Home() {
       }
 
       if (data && data.length > 0) {
-       // Filter out system files and only get video files  
-const videoFiles = data.filter(file =>
-  !file.name.includes('.emptyFolderPlaceholder') &&
-  (file.name.endsWith('.mp4') || file.name.endsWith('.webm') || file.name.endsWith('.mov'))
-);
+        // Filter out system files and only get video files
+        const videoFiles = data.filter(
+          (file) =>
+            !file.name.includes('.emptyFolderPlaceholder') &&
+            (file.name.endsWith('.mp4') || file.name.endsWith('.webm') || file.name.endsWith('.mov'))
+        );
 
-console.log('DEBUG: Filtered video files:', videoFiles.map(f => f.name));
+        console.log('DEBUG: Filtered video files:', videoFiles.map((f) => f.name));
 
-// Create direct public URLs (no authentication needed for public buckets)
-const videoUrls = videoFiles.map((file) => {
-      return `https://cgfcmsmwfwmkjfasvznl.supabase.co/storage/v1/object/public/videos/${encodeURIComponent(file.name)}`;    });                console.log('DEBUG: Final video URLs set:', videoUrls);
+        // Create direct public URLs (no authentication needed for public buckets)
+        const videoUrls = videoFiles.map((file) => {
+          return `https://cgfcmsmwfwmkjfasvznl.supabase.co/storage/v1/object/public/videos/${encodeURIComponent(file.name)}`;
+        });
+
+        console.log('DEBUG: Final video URLs set:', videoUrls);
+        setVideos(videoUrls);
+        setCurrentVideoIndex(0);
+        setNextVideoIndex(videoUrls.length > 1 ? 1 : 0);
       }
     } catch (error) {
       console.error('Error fetching videos:', error);
